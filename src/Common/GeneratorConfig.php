@@ -257,6 +257,11 @@ class GeneratorConfig
         }
 
         $commandData->addDynamicVariable(
+            '$FRAME$',
+            config('infyom.laravel_generator.frame', 'layouts.app')
+        );
+
+        $commandData->addDynamicVariable(
             '$API_PREFIX$',
             config('infyom.laravel_generator.api_prefix', 'api')
         );
