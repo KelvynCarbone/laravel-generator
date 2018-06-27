@@ -262,6 +262,16 @@ class GeneratorConfig
         );
 
         $commandData->addDynamicVariable(
+            '$BOOTSTRAP-BUTTONS-CSS$',
+            config('infyom.laravel_generator.bootstra-buttons-css', 'https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css')
+        );
+
+        $commandData->addDynamicVariable(
+            '$BOOTSTRAP-BUTTONS-JS$',
+            config('infyom.laravel_generator.bootstra-buttons-js', 'https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js')
+        );
+
+        $commandData->addDynamicVariable(
             '$API_PREFIX$',
             config('infyom.laravel_generator.api_prefix', 'api')
         );
