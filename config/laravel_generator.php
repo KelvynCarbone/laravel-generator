@@ -95,6 +95,8 @@ return [
     |
     */
 
+    'frame'  => 'layouts.app',
+
     'api_prefix'  => 'api',
 
     'api_version' => 'v1',

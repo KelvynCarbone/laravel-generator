@@ -125,9 +125,9 @@ class GeneratorConfig
         );
 
         $this->nsApiController = config(
-            'infyom.laravel_generator.namespace.api_controller',
-            'App\Http\Controllers\API'
-        ).$prefix;
+                'infyom.laravel_generator.namespace.api_controller',
+                'App\Http\Controllers\API'
+            ).$prefix;
         $this->nsApiRequest = config('infyom.laravel_generator.namespace.api_request', 'App\Http\Requests\API').$prefix;
 
         $this->nsRequest = config('infyom.laravel_generator.namespace.request', 'App\Http\Requests').$prefix;
@@ -151,9 +151,9 @@ class GeneratorConfig
         }
 
         $this->pathRepository = config(
-            'infyom.laravel_generator.path.repository',
-            app_path('Repositories/')
-        ).$prefix;
+                'infyom.laravel_generator.path.repository',
+                app_path('Repositories/')
+            ).$prefix;
 
         $this->pathModel = config('infyom.laravel_generator.path.model', app_path('Models/')).$prefix;
         if (config('infyom.laravel_generator.ignore_model_prefix', false)) {
@@ -163,14 +163,14 @@ class GeneratorConfig
         $this->pathDataTables = config('infyom.laravel_generator.path.datatables', app_path('DataTables/')).$prefix;
 
         $this->pathApiController = config(
-            'infyom.laravel_generator.path.api_controller',
-            app_path('Http/Controllers/API/')
-        ).$prefix;
+                'infyom.laravel_generator.path.api_controller',
+                app_path('Http/Controllers/API/')
+            ).$prefix;
 
         $this->pathApiRequest = config(
-            'infyom.laravel_generator.path.api_request',
-            app_path('Http/Requests/API/')
-        ).$prefix;
+                'infyom.laravel_generator.path.api_request',
+                app_path('Http/Requests/API/')
+            ).$prefix;
 
         $this->pathApiRoutes = config('infyom.laravel_generator.path.api_routes', app_path('Http/api_routes.php'));
 
@@ -179,22 +179,22 @@ class GeneratorConfig
         $this->pathApiTestTraits = config('infyom.laravel_generator.path.test_trait', base_path('tests/traits/'));
 
         $this->pathController = config(
-            'infyom.laravel_generator.path.controller',
-            app_path('Http/Controllers/')
-        ).$prefix;
+                'infyom.laravel_generator.path.controller',
+                app_path('Http/Controllers/')
+            ).$prefix;
 
         $this->pathRequest = config('infyom.laravel_generator.path.request', app_path('Http/Requests/')).$prefix;
 
         $this->pathRoutes = config('infyom.laravel_generator.path.routes', app_path('Http/routes.php'));
 
         $this->pathViews = config(
-            'infyom.laravel_generator.path.views',
-            base_path('resources/views/')
-        ).$viewPrefix.$this->mSnakePlural.'/';
+                'infyom.laravel_generator.path.views',
+                base_path('resources/views/')
+            ).$viewPrefix.$this->mSnakePlural.'/';
 
         $this->modelJsPath = config(
-                'infyom.laravel_generator.path.modelsJs',
-                base_path('resources/assets/js/models/')
+            'infyom.laravel_generator.path.modelsJs',
+            base_path('resources/assets/js/models/')
         );
     }
 
@@ -255,6 +255,21 @@ class GeneratorConfig
         } else {
             $commandData->addDynamicVariable('$PUBLIC_PREFIX$', '');
         }
+
+        $commandData->addDynamicVariable(
+            '$FRAME$',
+            config('infyom.laravel_generator.frame', 'layouts.app')
+        );
+
+        $commandData->addDynamicVariable(
+            '$BOOTSTRAP-BUTTONS-CSS$',
+            config('infyom.laravel_generator.bootstra-buttons-css', 'https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css')
+        );
+
+        $commandData->addDynamicVariable(
+            '$BOOTSTRAP-BUTTONS-JS$',
+            config('infyom.laravel_generator.bootstra-buttons-js', 'https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js')
+        );
 
         $commandData->addDynamicVariable(
             '$API_PREFIX$',
