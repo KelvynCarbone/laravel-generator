@@ -26,6 +26,14 @@ class $MODEL_NAME$Controller extends AppBaseController
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function getQuery()
+    {
+        return $this->$MODEL_NAME_CAMEL$Repository->getQuery();
+    }
+
+    /**
      * Display a listing of the $MODEL_NAME$.
      *
      * @param Request $request
