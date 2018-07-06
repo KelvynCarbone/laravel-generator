@@ -18,6 +18,14 @@ class $MODEL_NAME$Repository extends BaseRepository
     /**
      * Configure the Model
      **/
+    public function getQuery()
+    {
+        return $MODEL_NAME$::query();
+    }
+
+    /**
+     * Configure the Model
+     **/
     public function model()
     {
         return $MODEL_NAME$::class;
