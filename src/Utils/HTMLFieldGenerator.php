@@ -10,6 +10,9 @@ class HTMLFieldGenerator
     {
         $fieldTemplate = '';
 
+        if($field->fieldType=="integer" && strpos($field->name, '_id') !== false)
+            return get_template('scaffold.fields.select2', $templateType);
+
         switch ($field->htmlType) {
             case 'text':
             case 'textarea':
