@@ -10,9 +10,13 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Rutorika\Html\Http\Select2ableTrait;
 
 class $MODEL_NAME$Controller extends AppBaseController
 {
+    use Select2ableTrait;
+    public $displayAttribute;
+
     /** @var  $MODEL_NAME$Repository */
     private $$MODEL_NAME_CAMEL$Repository;
 
