@@ -262,6 +262,28 @@ class GeneratorConfig
         );
 
         $commandData->addDynamicVariable(
+            '$FORM_JS$',
+            config('infyom.laravel_generator.form_scripts','
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+                <script src="/vendor/rutorika/form/build/js/vendor.js"></script>
+                <script src="/vendor/rutorika/form/build/js/scripts.js"></script>
+            ')
+        );
+
+        $commandData->addDynamicVariable(
+            '$READY_SCRIPTS$',
+            config('infyom.laravel_generator.form_scripts','')
+        );
+
+        $commandData->addDynamicVariable(
+            '$FORM_CSS$',
+            config('infyom.laravel_generator.form_css', '
+                <link rel="stylesheet" href="/vendor/rutorika/form/build/css/vendor.min.css">
+                <link rel="stylesheet" href="/vendor/rutorika/form/build/css/style.min.css">
+            ')
+        );
+
+        $commandData->addDynamicVariable(
             '$BOOTSTRAP-BUTTONS-CSS$',
             config('infyom.laravel_generator.bootstra-buttons-css', 'https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css')
         );
