@@ -272,7 +272,11 @@ class GeneratorConfig
 
         $commandData->addDynamicVariable(
             '$READY_SCRIPTS$',
-            config('infyom.laravel_generator.form_scripts','')
+            config('infyom.laravel_generator.form_scripts','
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+                <script src="/vendor/rutorika/form/build/js/vendor.js"></script>
+                <script src="/vendor/rutorika/form/build/js/scripts.js"></script>
+            ')
         );
 
         $commandData->addDynamicVariable(
