@@ -1,3 +1,3 @@
 Route::get('$MODEL_NAME_PLURAL_CAMEL$/select2Search', '$PATH_PREFIX$$MODEL_NAME$Controller@select2Search');
-Route::get('$MODEL_NAME_PLURAL_CAMEL$/select2search/init', ['as' => '$MODEL_NAME_PLURAL_CAMEL$.select2searchInit','uses' => '$MODEL_NAME$Controller@select2searchInit',]);
+Route::get('$MODEL_NAME_PLURAL_CAMEL$/select2search/init', ['as' => '$MODEL_NAME_PLURAL_CAMEL$.select2searchInit','uses' => '$PATH_PREFIX$$MODEL_NAME$Controller@select2searchInit',]);
 Route::resource('$MODEL_NAME_PLURAL_CAMEL$', '$PATH_PREFIX$$MODEL_NAME$Controller');
