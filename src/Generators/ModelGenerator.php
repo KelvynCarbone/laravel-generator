@@ -69,12 +69,12 @@ class ModelGenerator extends BaseGenerator
             if(($field->fieldType=="datetime" || $field->fieldType=="date") && $field->name !=="updated_at" && $field->name !=="created_at")
                 $translateDates .='public function set'.Str::camel($field->name).'Attribute($value)
                                     {
-                                        $this->attributes["'.$field->name.'"] = Carbon::createFromFormat("d/m/Y H:i:s", $value)->format("Y-m-d H:i:s");
+                                        $this->attributes["'.$field->name.'"] = Carbon::createFromFormat("d/m/Y H:i", $value)->format("Y-m-d H:i");
                                     }
                                     
                                     public function get'.Str::camel($field->name).'Attribute($value)
                                     {
-                                        return Carbon::parse($value)->format("d/m/Y H:i:s");
+                                        return Carbon::parse($value)->format("d/m/Y H:i");
                                     }
                             ';
         }
