@@ -64,6 +64,8 @@ class ControllerGenerator extends BaseGenerator
 
         $headerFields = [];
 
+        $translateDates = '';
+
         foreach ($this->commandData->fields as $field) {
             if (!$field->inIndex) {
                 continue;
@@ -74,6 +76,11 @@ class ControllerGenerator extends BaseGenerator
                 $headerFieldTemplate,
                 $field
             );
+
+            if($field->fieldType=="datetime" || $field->fieldType=="date")
+                $translateDates .='$dataTable->editColumn("'.$field->name.'", function($q){
+                    return isset($q->'.$field->name.') ? Carbon::parse($q->'.$field->name.')->format("d/m/Y H:i") : null;
+                });';
         }
 
         $path = $this->commandData->config->pathDataTables;
@@ -83,6 +90,7 @@ class ControllerGenerator extends BaseGenerator
         $fields = implode(','.infy_nl_tab(1, 3), $headerFields);
 
         $templateData = str_replace('$DATATABLE_COLUMNS$', $fields, $templateData);
+        $templateData = str_replace('$TRANSLATEDATES$', $translateDates, $templateData);
 
         FileUtil::createFile($path, $fileName, $templateData);
 

@@ -2,6 +2,7 @@
 
 namespace InfyOm\Generator\Generators;
 
+use Illuminate\Support\Str;
 use InfyOm\Generator\Common\CommandData;
 use InfyOm\Generator\Common\GeneratorFieldRelation;
 use InfyOm\Generator\Utils\FileUtil;
@@ -59,11 +60,18 @@ class ModelGenerator extends BaseGenerator
         $templateData = $this->fillSoftDeletes($templateData);
 
         $fillables = [];
+        $translateDates = '';
 
         foreach ($this->commandData->fields as $field) {
             if ($field->isFillable) {
                 $fillables[] = "'".$field->name."'";
             }
+            if(($field->fieldType=="datetime" || $field->fieldType=="date") && $field->name !=="updated_at" && $field->name !=="created_at")
+                $translateDates .='public function set'.Str::camel($field->name).'Attribute($value)
+                                    {
+                                        $this->attributes["'.$field->name.'"] = Carbon::createFromFormat("d/m/Y H:i", $value)->format("Y-m-d H:i:s");
+                                    }
+                            ';
         }
 
         $templateData = $this->fillDocs($templateData);
@@ -75,6 +83,8 @@ class ModelGenerator extends BaseGenerator
         } else {
             $primary = '';
         }
+
+        $templateData = str_replace('$TRANSLATEDATES$', $translateDates, $templateData);
 
         $templateData = str_replace('$PRIMARY$', $primary, $templateData);
 

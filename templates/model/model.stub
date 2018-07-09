@@ -3,6 +3,7 @@
 namespace $NAMESPACE_MODEL$;
 
 use $NAMESPACE_MODEL_EXTEND$ as Model;
+use Carbon\Carbon;
 $SOFT_DELETE_IMPORT$
 $DOCS$
 class $MODEL_NAME$ extends Model
@@ -35,4 +36,6 @@ $PRIMARY$
     ];
 
     $RELATIONS$
+
+    $TRANSLATEDATES$
 }
