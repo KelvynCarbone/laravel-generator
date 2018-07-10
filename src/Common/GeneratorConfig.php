@@ -65,6 +65,7 @@ class GeneratorConfig
         'fieldsFile',
         'jsonFromGUI',
         'tableName',
+        'title',
         'fromTable',
         'save',
         'primary',
@@ -291,6 +292,11 @@ class GeneratorConfig
         $commandData->addDynamicVariable(
             '$BOOTSTRAP-BUTTONS-JS$',
             config('infyom.laravel_generator.bootstra-buttons-js', 'https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js')
+        );
+
+        $commandData->addDynamicVariable(
+            '$CRUD_TITLE$',
+            isset($this->options['title']) ? $this->options['title'] : $this->mName
         );
 
         $commandData->addDynamicVariable(
