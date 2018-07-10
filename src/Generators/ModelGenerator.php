@@ -56,8 +56,7 @@ class ModelGenerator extends BaseGenerator
     private function fillTemplate($templateData)
     {
         $templateData = fill_template($this->commandData->dynamicVars, $templateData);
-
-        $templateData = $this->fillSoftDeletes($templateData);
+        $haveSoftDelete = false;
 
         $fillables = [];
         $translateDates = '';
@@ -77,7 +76,14 @@ class ModelGenerator extends BaseGenerator
                                         return Carbon::parse($value)->format("d/m/Y H:i");
                                     }
                             ';
+
+            if($field->fieldType=="datetime" && $field->name =="deleted_at")
+                $haveSoftDelete = true;
+
         }
+
+
+        $templateData = $this->fillSoftDeletes($templateData,$haveSoftDelete);
 
         $templateData = $this->fillDocs($templateData);
 
@@ -110,13 +116,13 @@ class ModelGenerator extends BaseGenerator
         return $templateData;
     }
 
-    private function fillSoftDeletes($templateData)
+    private function fillSoftDeletes($templateData, $haveSoftDelete = false)
     {
         if (!$this->commandData->getOption('softDelete')) {
             $templateData = str_replace('$SOFT_DELETE_IMPORT$', '', $templateData);
             $templateData = str_replace('$SOFT_DELETE$', '', $templateData);
             $templateData = str_replace('$SOFT_DELETE_DATES$', '', $templateData);
-        } else {
+        } else if($haveSoftDelete==true){
             $templateData = str_replace(
                 '$SOFT_DELETE_IMPORT$', "use Illuminate\\Database\\Eloquent\\SoftDeletes;\n",
                 $templateData
@@ -127,6 +133,10 @@ class ModelGenerator extends BaseGenerator
                 '$SOFT_DELETE_DATES$', infy_nl_tab()."protected \$dates = ['".$deletedAtTimestamp."'];\n",
                 $templateData
             );
+        }else{
+            $templateData = str_replace('$SOFT_DELETE_IMPORT$', '', $templateData);
+            $templateData = str_replace('$SOFT_DELETE$', '', $templateData);
+            $templateData = str_replace('$SOFT_DELETE_DATES$', '', $templateData);
         }
 
         return $templateData;
