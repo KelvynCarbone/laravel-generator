@@ -10,12 +10,13 @@ class HTMLFieldGenerator
     {
         $fieldTemplate = '';
 
-        \Log::alert($field->fieldType);
-
         if($field->fieldType=="integer" && strpos($field->name, '_id') !== false)
             return get_template('scaffold.fields.select2', $templateType);
         else if($field->fieldType=="timestamp" || $field->fieldType=="datetime"){
             return get_template('scaffold.fields.datetime', $templateType);
+        }
+        else if($field->fieldType=="text" || $field->fieldType=="mediumtext" || $field->htmlType=="textarea"){
+            return get_template('scaffold.fields.textarea', $templateType);
         }
 
         switch ($field->htmlType) {
