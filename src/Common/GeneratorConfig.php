@@ -285,13 +285,23 @@ class GeneratorConfig
         );
 
         $commandData->addDynamicVariable(
-            '$BOOTSTRAP-BUTTONS-CSS$',
-            config('infyom.laravel_generator.bootstra-buttons-css', 'https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css')
+            '$DATATABLE_CSS$',
+            config('infyom.laravel_generator.datatable_css', '
+                <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+                <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+                <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+            ')
         );
 
         $commandData->addDynamicVariable(
-            '$BOOTSTRAP-BUTTONS-JS$',
-            config('infyom.laravel_generator.bootstra-buttons-js', 'https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js')
+            '$DATATABLE_JS$',
+            config('infyom.laravel_generator.datatable_js', '
+                <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+                <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+                <script src="vendor/datatables/buttons.server-side.js"></script>
+            ')
         );
 
         $commandData->addDynamicVariable(

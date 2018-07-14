@@ -46,12 +46,24 @@ class $MODEL_NAME$DataTable extends DataTable
             ->minifiedAjax()
             ->addAction(['width' => '80px'])
             ->parameters([
+                'responsive' => true,
                 'dom'     => 'Bfrtip',
                 'order'   => [[0, 'desc']],
                 'buttons' => [
-                                    'export',
-                                    'reload',
-                                ],
+                                'pageLength',
+                                [
+                                'extend' => 'collection',
+                                'text' => 'Exportar',
+                                'autoClose' => true,
+                                'buttons' => [
+                                        'copy',
+                                        'excel',
+                                        'csv',
+                                        'pdf',
+                                        'print'
+                                    ]
+                                ]
+                            ],
                                 "language" => [
                                     "sEmptyTable" => "Nenhum registro encontrado",
                                     "sInfo" => "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -75,8 +87,12 @@ class $MODEL_NAME$DataTable extends DataTable
                                         "sSortDescending" => ": Ordenar colunas de forma descendente"
                                     ],
                                     "buttons" => [
-                                        'export' => 'Exportar',
-                                        'reload' => 'Atualizar'
+                                            'copy' => 'Copiar',
+                                            'excel' => 'Excel',
+                                            'csv' => 'CSV',
+                                            'pdf' => 'PDF',
+                                            'print' => 'Imprimir',
+                                            'pageLength' => 'Exibir %d registros'
                                     ]
                                 ],
             ]);
