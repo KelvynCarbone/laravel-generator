@@ -194,12 +194,15 @@ class ViewGenerator extends BaseGenerator
         $this->htmlFields = [];
 
         foreach ($this->commandData->fields as $field) {
-            if (!$field->inForm) {
+            if (!$field->inForm || $field->name=="slug") {
                 continue;
             }
 
             $fieldTemplate = HTMLFieldGenerator::generateHTML($field, $this->templateType);
-
+            if(strpos($field->name,"_id")){
+                $fieldTemplate = str_replace('$RELATION_PATH$',Str::camel(Str::plural(str_replace("_id","",$field->name))),$fieldTemplate);
+                $fieldTemplate = str_replace('$FIELD_NAME_TITLE$',Str::title(str_replace("_id","",$field->name)),$fieldTemplate);
+            }
             if (!empty($fieldTemplate)) {
                 $fieldTemplate = fill_template_with_field_data(
                     $this->commandData->dynamicVars,
@@ -212,14 +215,12 @@ class ViewGenerator extends BaseGenerator
 
             if($field->fieldType=="text" || $field->fieldType=="mediumtext" || $field->htmlType=="textarea")
                 $this->haveTextField = true;
-
         }
 
         $templateData = get_template('scaffold.views.fields', $this->templateType);
         $templateData = fill_template($this->commandData->dynamicVars, $templateData);
 
         $templateData = str_replace('$FIELDS$', implode("\n\n", $this->htmlFields), $templateData);
-
         FileUtil::createFile($this->path, 'fields.blade.php', $templateData);
         $this->commandData->commandInfo('field.blade.php created');
     }
@@ -227,10 +228,8 @@ class ViewGenerator extends BaseGenerator
     private function generateCreate()
     {
         $templateData = get_template('scaffold.views.create', $this->templateType);
-        if($this->haveTextField==true){
-            $templateData = str_replace('$TEXT_EDITOR_SCRIPT$', config('infyom.laravel_generator.text_editor_script', ''), $templateData);
-            $templateData = str_replace('$TEXT_EDITOR_PLUGIN$', config('infyom.laravel_generator.text_editor_plugin', ''), $templateData);
-        }
+        $templateData = str_replace('$TEXT_EDITOR_SCRIPT$', config('infyom.laravel_generator.text_editor_script', ''), $templateData);
+        $templateData = str_replace('$TEXT_EDITOR_PLUGIN$', config('infyom.laravel_generator.text_editor_plugin', ''), $templateData);
 
         $templateData = fill_template($this->commandData->dynamicVars, $templateData);
 
@@ -241,6 +240,8 @@ class ViewGenerator extends BaseGenerator
     private function generateUpdate()
     {
         $templateData = get_template('scaffold.views.edit', $this->templateType);
+        $templateData = str_replace('$TEXT_EDITOR_SCRIPT$', config('infyom.laravel_generator.text_editor_script', ''), $templateData);
+        $templateData = str_replace('$TEXT_EDITOR_PLUGIN$', config('infyom.laravel_generator.text_editor_plugin', ''), $templateData);
 
         $templateData = fill_template($this->commandData->dynamicVars, $templateData);
 

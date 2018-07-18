@@ -57,11 +57,14 @@ class ModelGenerator extends BaseGenerator
     {
         $templateData = fill_template($this->commandData->dynamicVars, $templateData);
         $haveSoftDelete = false;
+        $haveSlug = false;
 
         $fillables = [];
         $translateDates = '';
+        $second_field = null;
 
-        foreach ($this->commandData->fields as $field) {
+        foreach ($this->commandData->fields as $key => $field) {
+            if($key==1) $second_field = $field->name;
             if ($field->isFillable) {
                 $fillables[] = "'".$field->name."'";
             }
@@ -80,6 +83,9 @@ class ModelGenerator extends BaseGenerator
             if($field->fieldType=="datetime" && $field->name =="deleted_at")
                 $haveSoftDelete = true;
 
+            if(strpos($field->name,"slug") !==false)
+                $haveSlug = $second_field;
+
         }
 
 
@@ -93,6 +99,26 @@ class ModelGenerator extends BaseGenerator
             $primary = infy_tab()."protected \$primaryKey = '".$this->commandData->getOption('primary')."';\n";
         } else {
             $primary = '';
+        }
+
+        if($haveSlug !==false){
+            $templateData = str_replace('$SLUG_FUNCTION$', "public function sluggable () {
+
+                return [
+                    'slug' => [
+                        'source' => '".$haveSlug."'
+                    ]
+                ];
+
+            }", $templateData);
+
+            $templateData = str_replace('$SLUGGABLE_PATH$', 'use Cviebrock\EloquentSluggable\Sluggable;', $templateData);
+            $templateData = str_replace('$SLUGGABLE_TRAIT$', 'use Sluggable;', $templateData);
+        }else{
+            $templateData = str_replace('$SLUG_FUNCTION$', "", $templateData);
+
+            $templateData = str_replace('$SLUGGABLE_PATH$', '', $templateData);
+            $templateData = str_replace('$SLUGGABLE_TRAIT$', '', $templateData);
         }
 
         $templateData = str_replace('$TRANSLATEDATES$', $translateDates, $templateData);

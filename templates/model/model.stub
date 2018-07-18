@@ -3,11 +3,13 @@
 namespace $NAMESPACE_MODEL$;
 
 use $NAMESPACE_MODEL_EXTEND$ as Model;
+$SLUGGABLE_PATH$
 use Carbon\Carbon;
 $SOFT_DELETE_IMPORT$
 $DOCS$
 class $MODEL_NAME$ extends Model
 {
+$SLUGGABLE_TRAIT$
 $SOFT_DELETE$
     public $table = '$TABLE_NAME$';
     $TIMESTAMPS$
@@ -16,6 +18,8 @@ $PRIMARY$
     public $fillable = [
         $FIELDS$
     ];
+
+    $SLUG_FUNCTION$
 
     /**
      * The attributes that should be casted to native types.

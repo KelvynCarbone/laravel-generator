@@ -10,8 +10,9 @@ class HTMLFieldGenerator
     {
         $fieldTemplate = '';
 
-        if($field->fieldType=="integer" && strpos($field->name, '_id') !== false)
+        if($field->fieldType=="integer" && strpos($field->name, '_id') !== false) {
             return get_template('scaffold.fields.select2', $templateType);
+        }
         else if($field->fieldType=="timestamp" || $field->fieldType=="datetime"){
             return get_template('scaffold.fields.datetime', $templateType);
         }

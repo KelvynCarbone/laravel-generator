@@ -2,6 +2,7 @@
 
 namespace InfyOm\Generator\Generators\Scaffold;
 
+use Illuminate\Support\Str;
 use InfyOm\Generator\Common\CommandData;
 use InfyOm\Generator\Generators\BaseGenerator;
 use InfyOm\Generator\Utils\FileUtil;
@@ -64,10 +65,10 @@ class ControllerGenerator extends BaseGenerator
 
         $headerFields = [];
 
-        $translateDates = '';
+        $editColumns = '';
 
         foreach ($this->commandData->fields as $field) {
-            if (!$field->inIndex) {
+            if (!$field->inIndex || strpos($field->name, "slug") !==false) {
                 continue;
             }
             $headerFields[] = $fieldTemplate = fill_template_with_field_data(
@@ -78,9 +79,24 @@ class ControllerGenerator extends BaseGenerator
             );
 
             if($field->fieldType=="datetime" || $field->fieldType=="date")
-                $translateDates .='$dataTable->editColumn("'.$field->name.'", function($q){
+                $editColumns .='$dataTable->editColumn("'.$field->name.'", function($q){
                     return isset($q->'.$field->name.') ? Carbon::parse($q->'.$field->name.')->format("d/m/Y H:i") : null;
                 });';
+
+            if($field->fieldType=="integer" || strpos($field->name,"_id")) {
+                $relation = Str::snake(Str::singular(str_replace("_id","",$field->name)));
+                $editColumns .= '$dataTable->editColumn("' . $field->name . '", function($q){
+                    return isset($q->' . $relation . ') ? $q->' . $relation . '->'.$relation.' : $q->'.$field->name.';
+                });
+                ';
+            }
+
+            if($field->fieldType=="boolean") {
+                $editColumns .= '$dataTable->editColumn("' . $field->name . '", function($q){
+                    return isset($q->' . $field->name . ') ? "Sim" : "Não";
+                });
+                ';
+            }
         }
 
         $path = $this->commandData->config->pathDataTables;
@@ -90,7 +106,7 @@ class ControllerGenerator extends BaseGenerator
         $fields = implode(','.infy_nl_tab(1, 3), $headerFields);
 
         $templateData = str_replace('$DATATABLE_COLUMNS$', $fields, $templateData);
-        $templateData = str_replace('$TRANSLATEDATES$', $translateDates, $templateData);
+        $templateData = str_replace('$EDIT_COLUMNS$', $editColumns, $templateData);
 
         FileUtil::createFile($path, $fileName, $templateData);
 
