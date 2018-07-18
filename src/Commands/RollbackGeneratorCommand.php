@@ -38,7 +38,7 @@ class RollbackGeneratorCommand extends Command
      *
      * @var string
      */
-    protected $name = 'infyom:rollback';
+    protected $name = 'kelvyn:rollback';
     /**
      * The console command description.
      *

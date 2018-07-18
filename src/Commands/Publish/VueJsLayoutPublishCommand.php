@@ -11,7 +11,7 @@ class VueJsLayoutPublishCommand extends PublishBaseCommand
      *
      * @var string
      */
-    protected $name = 'infyom.publish:vuejs';
+    protected $name = 'kelvyn.publish:vuejs';
 
     /**
      * The console command description.

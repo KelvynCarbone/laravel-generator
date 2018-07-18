@@ -11,7 +11,7 @@ class LayoutPublishCommand extends PublishBaseCommand
      *
      * @var string
      */
-    protected $name = 'infyom.publish:layout';
+    protected $name = 'kelvyn.publish:layout';
 
     /**
      * The console command description.

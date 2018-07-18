@@ -11,7 +11,7 @@ class GeneratorPublishCommand extends PublishBaseCommand
      *
      * @var string
      */
-    protected $name = 'infyom:publish';
+    protected $name = 'kelvyn:publish';
 
     /**
      * The console command description.

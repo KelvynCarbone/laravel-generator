@@ -12,7 +12,7 @@ class APIGeneratorCommand extends BaseCommand
      *
      * @var string
      */
-    protected $name = 'infyom:api';
+    protected $name = 'kelvyn:api';
 
     /**
      * The console command description.
