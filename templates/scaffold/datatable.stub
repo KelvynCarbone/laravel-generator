@@ -18,7 +18,7 @@ class $MODEL_NAME$DataTable extends DataTable
     public function dataTable($query)
     {
         $dataTable = new EloquentDataTable($query);
-        $dataTable->addColumn('Ações', '$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.datatables_actions');
+        $dataTable->addColumn('action', '$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.datatables_actions');
         $EDIT_COLUMNS$
         return $dataTable;
     }
