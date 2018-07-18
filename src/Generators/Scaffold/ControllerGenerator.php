@@ -78,10 +78,10 @@ class ControllerGenerator extends BaseGenerator
                 $field
             );
 
-            if($field->fieldType=="datetime" || $field->fieldType=="date")
-                $editColumns .='$dataTable->editColumn("'.$field->name.'", function($q){
-                    return isset($q->'.$field->name.') ? Carbon::parse($q->'.$field->name.')->format("d/m/Y H:i") : null;
-                });';
+//            if($field->fieldType=="datetime" || $field->fieldType=="date")
+//                $editColumns .='$dataTable->editColumn("'.$field->name.'", function($q){
+//                    return isset($q->'.$field->name.') ? Carbon::parse($q->'.$field->name.')->format("d/m/Y H:i") : null;
+//                });';
 
             if($field->fieldType=="integer" || strpos($field->name,"_id")) {
                 $relation = Str::snake(Str::singular(str_replace("_id","",$field->name)));
