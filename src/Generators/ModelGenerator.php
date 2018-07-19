@@ -68,17 +68,20 @@ class ModelGenerator extends BaseGenerator
             if ($field->isFillable) {
                 $fillables[] = "'".$field->name."'";
             }
-            if(($field->fieldType=="datetime" || $field->fieldType=="date") && $field->name !=="updated_at" && $field->name !=="created_at")
-                $translateDates .='public function set'.Str::camel($field->name).'Attribute($value)
-                                    {
-                                        $this->attributes["'.$field->name.'"] = Carbon::createFromFormat("d/m/Y H:i", $value)->format("Y-m-d H:i");
-                                    }
-                                    
-                                    public function get'.Str::camel($field->name).'Attribute($value)
+            if(($field->fieldType=="datetime" || $field->fieldType=="date")) {
+                if($field->name !=="updated_at" && $field->name !=="created_at"){
+                    $translateDates .= 'public function set' . Str::camel($field->name) . 'Attribute($value)
+                                        {
+                                            $this->attributes["' . $field->name . '"] = Carbon::createFromFormat("d/m/Y H:i", $value)->format("Y-m-d H:i");
+                                        }
+                                ';
+                }
+                $translateDates .='public function get' . Str::camel($field->name) . 'Attribute($value)
                                     {
                                         return Carbon::parse($value)->format("d/m/Y H:i");
                                     }
-                            ';
+                                    ';
+            }
 
             if($field->fieldType=="datetime" && $field->name =="deleted_at")
                 $haveSoftDelete = true;

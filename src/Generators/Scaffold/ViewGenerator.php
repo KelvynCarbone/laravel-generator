@@ -258,7 +258,12 @@ class ViewGenerator extends BaseGenerator
         foreach ($this->commandData->fields as $field) {
             $singleFieldStr = str_replace('$FIELD_NAME_TITLE$', Str::title(str_replace('_', ' ', $field->name)),
                 $fieldTemplate);
-            $singleFieldStr = str_replace('$FIELD_NAME$', $field->name, $singleFieldStr);
+            if(strpos($field->name,"_id")) {
+                $relation = str_replace("_id","",$field->name);
+                $singleFieldStr = str_replace('$FIELD_NAME$', $relation.'->'.$relation, $singleFieldStr);
+            }
+            else
+                $singleFieldStr = str_replace('$FIELD_NAME$', $field->name, $singleFieldStr);
             $singleFieldStr = fill_template($this->commandData->dynamicVars, $singleFieldStr);
 
             $fieldsStr .= $singleFieldStr."\n\n";
