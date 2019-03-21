@@ -64,9 +64,14 @@ class $MODEL_NAME$Controller extends AppBaseController
 
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->create($input);
 
-        Flash::success('Registro salvo com sucesso! :)');
+        $msg_return = 'Registro salvo com sucesso! :)';
 
-        return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+        Flash::success($msg_return);
+
+        if(!request()->ajax())
+            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+        else
+            return response()->json(["message" => $msg_return]);
     }
 
     /**
@@ -81,9 +86,13 @@ class $MODEL_NAME$Controller extends AppBaseController
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->findWithoutFail($id);
 
         if (empty($$MODEL_NAME_CAMEL$)) {
-            Flash::error('Registro não encontrado! :(');
+            $msg_return = 'Registro não encontrado :(';
+            Flash::error($msg_return);
 
-            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            if(!request()->ajax())
+                return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            else
+                return response()->json(["message" => $msg_return],404);
         }
 
         return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.show')->with('$MODEL_NAME_CAMEL$', $$MODEL_NAME_CAMEL$);
@@ -101,9 +110,13 @@ class $MODEL_NAME$Controller extends AppBaseController
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->findWithoutFail($id);
 
         if (empty($$MODEL_NAME_CAMEL$)) {
-            Flash::error('Registro não encontrado :(');
+            $msg_return = 'Registro não encontrado :(';
+            Flash::error($msg_return);
 
-            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            if(!request()->ajax())
+                return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            else
+                return response()->json(["message" => $msg_return],404);
         }
 
         return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.edit')->with('$MODEL_NAME_CAMEL$', $$MODEL_NAME_CAMEL$);
@@ -122,16 +135,25 @@ class $MODEL_NAME$Controller extends AppBaseController
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->findWithoutFail($id);
 
         if (empty($$MODEL_NAME_CAMEL$)) {
-            Flash::error('Registro não encontrado :(');
+            $msg_return = 'Registro não encontrado :(';
+            Flash::error($msg_return);
 
-            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            if(!request()->ajax())
+                return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            else
+                return response()->json(["message" => $msg_return],404);
         }
 
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->update($request->all(), $id);
 
-        Flash::success('Registro atualizado com sucesso! :)');
+        $msg_return = 'Registro atualizado com sucesso! :)';
+        Flash::success($msg_return);
 
-        return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+
+        if(!request()->ajax())
+            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+        else
+            return response()->json(["message" => $msg_return]);
     }
 
     /**
@@ -146,15 +168,23 @@ class $MODEL_NAME$Controller extends AppBaseController
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->findWithoutFail($id);
 
         if (empty($$MODEL_NAME_CAMEL$)) {
-            Flash::error('Registro não encontrado :(');
+            $msg_return = 'Registro não encontrado :(';
+            Flash::error($msg_return);
 
-            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            if(!request()->ajax())
+                return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            else
+                return response()->json(["message" => $msg_return],404);
         }
 
         $this->$MODEL_NAME_CAMEL$Repository->delete($id);
 
-        Flash::success('Registro deletado com sucesso! :).');
+        $msg_return = 'Registro deletado com sucesso! :)';
+        Flash::success($msg_return);
 
-        return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+        if(!request()->ajax())
+            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+        else
+            return response()->json(["message" => $msg_return]);
     }
 }
