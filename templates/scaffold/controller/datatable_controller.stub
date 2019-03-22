@@ -66,10 +66,10 @@ class $MODEL_NAME$Controller extends AppBaseController
 
         $msg_return = 'Registro salvo com sucesso! :)';
 
-        Flash::success($msg_return);
-
-        if(!request()->ajax())
+        if(!request()->ajax()){
+            Flash::success($msg_return);
             return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+        }
         else
             return response()->json(["message" => $msg_return]);
     }
@@ -87,10 +87,11 @@ class $MODEL_NAME$Controller extends AppBaseController
 
         if (empty($$MODEL_NAME_CAMEL$)) {
             $msg_return = 'Registro não encontrado :(';
-            Flash::error($msg_return);
 
-            if(!request()->ajax())
+            if(!request()->ajax()){
+                Flash::error($msg_return);
                 return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            }
             else
                 return response()->json(["message" => $msg_return],404);
         }
@@ -115,10 +116,11 @@ class $MODEL_NAME$Controller extends AppBaseController
 
         if (empty($$MODEL_NAME_CAMEL$)) {
             $msg_return = 'Registro não encontrado :(';
-            Flash::error($msg_return);
 
-            if(!request()->ajax())
+            if(!request()->ajax()){
+                Flash::error($msg_return);
                 return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            }
             else
                 return response()->json(["message" => $msg_return],404);
         }
@@ -140,10 +142,11 @@ class $MODEL_NAME$Controller extends AppBaseController
 
         if (empty($$MODEL_NAME_CAMEL$)) {
             $msg_return = 'Registro não encontrado :(';
-            Flash::error($msg_return);
 
-            if(!request()->ajax())
+            if(!request()->ajax()){
+                Flash::error($msg_return);
                 return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            }
             else
                 return response()->json(["message" => $msg_return],404);
         }
@@ -151,11 +154,11 @@ class $MODEL_NAME$Controller extends AppBaseController
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->update($request->all(), $id);
 
         $msg_return = 'Registro atualizado com sucesso! :)';
-        Flash::success($msg_return);
 
-
-        if(!request()->ajax())
+        if(!request()->ajax()){
+            Flash::success($msg_return);
             return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+        }
         else
             return response()->json(["message" => $msg_return, "data" => $$MODEL_NAME_CAMEL$]);
     }
@@ -173,10 +176,11 @@ class $MODEL_NAME$Controller extends AppBaseController
 
         if (empty($$MODEL_NAME_CAMEL$)) {
             $msg_return = 'Registro não encontrado :(';
-            Flash::error($msg_return);
 
-            if(!request()->ajax())
+            if(!request()->ajax()){
+                Flash::error($msg_return);
                 return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+            }
             else
                 return response()->json(["message" => $msg_return],404);
         }
@@ -184,10 +188,11 @@ class $MODEL_NAME$Controller extends AppBaseController
         $this->$MODEL_NAME_CAMEL$Repository->delete($id);
 
         $msg_return = 'Registro deletado com sucesso! :)';
-        Flash::success($msg_return);
 
-        if(!request()->ajax())
+        if(!request()->ajax()){
+            Flash::success($msg_return);
             return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+        }
         else
             return response()->json(["message" => $msg_return]);
     }
