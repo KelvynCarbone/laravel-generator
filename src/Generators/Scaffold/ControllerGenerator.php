@@ -93,7 +93,7 @@ class ControllerGenerator extends BaseGenerator
 
             if($field->fieldType=="boolean") {
                 $editColumns .= '$dataTable->editColumn("' . $field->name . '", function($q){
-                    return isset($q->' . $field->name . ') &&  '. $field->name .'!==0 ? "Sim" : "Não";
+                    return isset($q->' . $field->name . ') &&  '. $field->name .'==true ? "Sim" : "Não";
                 });
                 ';
             }
